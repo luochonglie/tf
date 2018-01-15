@@ -1,9 +1,9 @@
-from scipy import spatial
+
 from sklearn import neighbors
 import numpy as np
 import matplotlib.pyplot as plt
 
-from matplotlib.colors import ListedColormap
+
 
 # 随机生成 6 组 200 个的正态分布
 class1_count = 10
@@ -26,10 +26,6 @@ labels = [1] * class1_count + [2] * class2_count
 
 clf = neighbors.KNeighborsClassifier(k)
 clf.fit(training_points, labels)
-
-tree = spatial.KDTree(training_points)
-print(tree.data)
-
 
 x3 = [30]
 y3 = [30]
