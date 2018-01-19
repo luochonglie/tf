@@ -101,3 +101,4 @@ fig.canvas.mpl_connect('button_press_event', onclick)
 
 draw_step_0(fig)
 plt.show()
+input()
