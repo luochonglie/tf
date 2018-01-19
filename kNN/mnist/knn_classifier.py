@@ -10,23 +10,6 @@ from utils.mnist_utils import DataUtils
 import datetime
 
 
-def classify():
-    train_image, train_lable, test_image, test_label = main()
-    start_time = datetime.datetime.now()
-
-    knn = neighbors.KNeighborsClassifier(n_neighbors=3)
-    knn.fit(train_image, train_lable)
-
-    start_idx = 0
-    end_idx = 10
-
-    predict_label = knn.predict(test_image[start_idx:end_idx])
-    matched = predict_label == test_label[start_idx:end_idx]
-
-    end_time = datetime.datetime.now()
-    print('use time: ' + str(end_time - start_time))
-    print('error rate: ' + str(1 - (list(matched).count(True) * 1.0 / (end_idx - start_idx))))
-
 def main():
     start_time = datetime.datetime.now()
 
@@ -34,15 +17,34 @@ def main():
     training_label = '../../dataset/MNIST/train-labels.idx1-ubyte'
     testfile_image = '../../dataset/MNIST/t10k-images.idx3-ubyte'
     testfile_label = '../../dataset/MNIST/t10k-labels.idx1-ubyte'
-    train_image = DataUtils(filename=training_image).getImage()
-    train_label = DataUtils(filename=training_label).getLabel()
-    test_image = DataUtils(testfile_image).getImage()
-    test_label = DataUtils(testfile_label).getLabel()
+    train_image = DataUtils(filename=training_image).get_images()
+    train_label = DataUtils(filename=training_label).get_labels()
+    test_image = DataUtils(testfile_image).get_images()
+    test_label = DataUtils(testfile_label).get_labels()
 
     end_time = datetime.datetime.now()
     print('Load data use time: ' + str(end_time - start_time))
 
     return train_image, train_label, test_image, test_label
+
+
+def classify():
+    train_images, train_labels, test_images, test_labels = main()
+    start_time = datetime.datetime.now()
+
+    knn = neighbors.KNeighborsClassifier(n_neighbors=3)
+    knn.fit(train_images, train_labels)
+
+    start_idx = 0
+    length = 10
+    end_idx = start_idx + length
+
+    predict_label = knn.predict(test_images[start_idx:end_idx])
+    matched = predict_label == test_labels[start_idx:end_idx]
+
+    end_time = datetime.datetime.now()
+    print('use time: ' + str(end_time - start_time))
+    print('error rate: ' + str(1 - (list(matched).count(True) * 1.0 / (end_idx - start_idx))))
 
 
 if __name__ == "__main__":

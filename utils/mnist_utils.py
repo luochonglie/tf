@@ -54,7 +54,7 @@ class DataUtils(object):
         self._pictureBytes2 = self._tag + self._pictureBytes
         self._labelByte2 = self._tag + self._labelByte
 
-    def getImage(self):
+    def get_images(self):
         """
         将MNIST的二进制文件转换成像素特征数据
         """
@@ -77,7 +77,7 @@ class DataUtils(object):
             images.append(imgVal)
         return np.array(images)
 
-    def getLabel(self):
+    def get_labels(self):
         """
         将MNIST中label二进制文件转换成对应的label数字特征
         """
@@ -94,16 +94,42 @@ class DataUtils(object):
             labels.append(im[0])
         return np.array(labels)
 
-    def outImg(self, arrX, arrY):
+    def output_images(self, images, labels, start_idx=0, length=1):
         """
         根据生成的特征和数字标号，输出png的图像
         """
-        m, n = np.shape(arrX)
+        m, n = np.shape(images)
         # 每张图是28*28=784Byte
-        for i in range(1):
-            img = np.array(arrX[i])
+        for i in range(start_idx, start_idx + length):
+            img = np.array(images[i])
             img = img.reshape(28, 28)
-            outfile = str(i) + "_" + str(arrY[i]) + ".png"
+            outfile = str(i) + "_" + str(labels[i]) + ".png"
             plt.figure()
             plt.imshow(img, cmap='binary')  # 将图像黑白显示
             plt.savefig(self._outpath + "/" + outfile)
+
+
+def main():
+    train_file_images = '../dataset/MNIST/train-images.idx3-ubyte'
+    train_file_labels = '../dataset/MNIST/train-labels.idx1-ubyte'
+    test_file_images = '../dataset/MNIST/t10k-images.idx3-ubyte'
+    test_file_labels = '../dataset/MNIST/t10k-labels.idx1-ubyte'
+
+    train_images = DataUtils(filename=train_file_images).get_images()
+    train_labels = DataUtils(filename=train_file_labels).get_labels()
+    test_images = DataUtils(test_file_images).get_images()
+    test_labels = DataUtils(test_file_labels).get_labels()
+
+    # 以下内容是将图像保存到本地文件中
+    path_train_set = "../dataset/MNIST/images_train"
+    path_test_set = "../dataset/MNIST/images_test"
+    if not os.path.exists(path_train_set):
+        os.mkdir(path_train_set)
+    if not os.path.exists(path_test_set):
+        os.mkdir(path_test_set)
+    DataUtils(outpath=path_train_set).output_images(train_images, train_labels)
+    DataUtils(outpath=path_test_set).output_images(test_images, test_labels)
+
+
+if __name__ == "__main__":
+    main()
