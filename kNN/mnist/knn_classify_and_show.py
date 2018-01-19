@@ -31,16 +31,14 @@ def main():
     return train_image, train_label, test_image, test_label
 
 
-def classify_and_show():
+def classify_and_show(k=3, count=5):
     train_images, train_labels, test_images, test_labels = main()
 
-    k = 3
     knn = neighbors.KNeighborsClassifier(n_neighbors=k)
     knn.fit(train_images, train_labels)
 
-    length = 5
-    start_idx = np.random.randint(0, 10000 - length)
-    end_idx = start_idx + length
+    start_idx = np.random.randint(0, 10000 - count)
+    end_idx = start_idx + count
 
     predict_label = knn.predict(test_images[start_idx:end_idx])
     k_neighbors = knn.kneighbors(test_images[start_idx:end_idx], k, False)
