@@ -15,7 +15,7 @@ import math
 
 def main():
     start_time = datetime.datetime.now()
-
+    print('Load train and test data.')
     training_image = '../../dataset/MNIST/train-images.idx3-ubyte'
     training_label = '../../dataset/MNIST/train-labels.idx1-ubyte'
     testfile_image = '../../dataset/MNIST/t10k-images.idx3-ubyte'
@@ -34,14 +34,24 @@ def main():
 def classify_and_show(k=3, count=5):
     train_images, train_labels, test_images, test_labels = main()
 
-    knn = neighbors.KNeighborsClassifier(n_neighbors=k)
+    print('Create kd-tree.')
+    start_time = datetime.datetime.now()
+    knn = neighbors.KNeighborsClassifier(n_neighbors=k, algorithm='kd_tree')
     knn.fit(train_images, train_labels)
+    end_time = datetime.datetime.now()
+    print('Create kd-tree use time: ' + str(end_time - start_time))
 
     start_idx = np.random.randint(0, 10000 - count)
     end_idx = start_idx + count
 
+    print('Predict')
+    start_time = datetime.datetime.now()
     predict_label = knn.predict(test_images[start_idx:end_idx])
     k_neighbors = knn.kneighbors(test_images[start_idx:end_idx], k, False)
+
+    end_time = datetime.datetime.now()
+    print('Predict use time: ' + str(end_time - start_time))
+
     print(k_neighbors)
     k_neighbor_images = []
     k_neighbor_labels = []
