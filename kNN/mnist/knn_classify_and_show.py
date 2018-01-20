@@ -2,7 +2,7 @@
 """
 Created on Thu Feb 25 16:09:58 2016
 Test MNIST dataset
-@author: liudiwei
+@author: chonglie
 """
 
 from sklearn import neighbors
