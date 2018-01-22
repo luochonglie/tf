@@ -6,11 +6,11 @@ DataRange = list(map(scipy.deg2rad, DataRange))
 Data1 = list(map(scipy.sin, DataRange))
 Data2 = list(map(scipy.cos, DataRange))
 
-toggle = True
+level = True
 
 
 def onclick(event):
-    global toggle
+    global level
 
     toggle = not toggle
     event.canvas.figure.clear()
