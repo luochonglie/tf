@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Feb 25 16:09:58 2016
-Test MNIST dataset
-@author: liudiwei
+使用 openCV 读取、复制、保存图片
+@author: chonglie
 """
 
 import cv2
@@ -10,11 +10,10 @@ import cv2
 
 def read_img(file_name='../dataset/img/cover.jpg'):
     """读取图片
-    :parameter:
-        file: 图片文件路径，默认'../dataset/img/cover.jpg'
 
-    :return:
-        图片文件
+    :param file_name: 图片文件路径，默认'../dataset/img/cover.jpg'
+
+    :return: 图片文件
     """
     return cv2.imread(file_name, 1)
 
@@ -45,7 +44,7 @@ def show_img(img):
     cv2.destroyAllWindows()
 
 
-def save(img, file_name='../dataset/img/copy_of_cover.jpg'):
+def save(img, file_name='../dataset/img/copy_of_cover.jpg', params=None):
     """保存图片
 
     :param
@@ -56,14 +55,17 @@ def save(img, file_name='../dataset/img/copy_of_cover.jpg'):
     :return:
     """
     if (file_name is not None) and (img is not None):
-        cv2.imwrite(file_name, img)
+        cv2.imwrite(file_name, img, params)
+
+
+def save_img_in_low_quality(img, file_name='../dataset/img/copy_of_cover.jpg'):
+    save(img, file_name, [int(cv2.IMWRITE_JPEG_QUALITY), 5])
 
 
 def main():
     img = read_img()
     copy_of_img = copy(img)
-    show_img(copy_of_img)
-    save(copy_of_img)
+    save_img_in_low_quality(copy_of_img)
 
 
 if __name__ == "__main__":

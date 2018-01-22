@@ -2,6 +2,7 @@
 
 from operator import itemgetter
 
+
 class Node:
     def __init__(self, _sa, _loc, _lc, _rc, _p):
         self.splitAttribute = _sa
@@ -102,6 +103,7 @@ def searchKDTree(root, point, k=1):
         root = root.parent
     return curPoint
 
+
 def main():
     """Example usage"""
     point_list = [(2, 3), (5, 4), (9, 6), (4, 7), (8, 1), (7, 2)]
@@ -109,6 +111,7 @@ def main():
     test_point = (4, 7);
     node = searchKDTree(tree, test_point)
     print(tree.location)
+
 
 if __name__ == '__main__':
     main()
