@@ -31,7 +31,7 @@ def main():
     return train_image, train_label, test_image, test_label
 
 
-def classify_and_show(k=3, count=5):
+def classify_and_show(k=3, size=5):
     train_images, train_labels, test_images, test_labels = main()
 
     print('Create kd-tree.')
@@ -41,8 +41,8 @@ def classify_and_show(k=3, count=5):
     end_time = datetime.datetime.now()
     print('Create kd-tree use time: ' + str(end_time - start_time))
 
-    start_idx = np.random.randint(0, 10000 - count)
-    end_idx = start_idx + count
+    start_idx = np.random.randint(0, 10000 - size)
+    end_idx = start_idx + size
 
     print('Predict')
     start_time = datetime.datetime.now()
@@ -60,10 +60,11 @@ def classify_and_show(k=3, count=5):
         k_neighbor_images.append(train_images[i])
         k_neighbor_labels.append(train_labels[i])
 
-    show_images(test_images[start_idx:end_idx], predict_label, k_neighbor_images, k_neighbor_labels, k)
+    show_images(test_images[start_idx:end_idx], test_labels[start_idx:end_idx], predict_label, k_neighbor_images,
+                k_neighbor_labels, k)
 
 
-def show_images(test_images, test_labels, train_images, train_labels, k):
+def show_images(test_images, test_labels, predict_labels, train_images, train_labels, k):
     for i in range(len(test_images)):
         plt.figure(num='Test Image:' + str(i), figsize=(6, 6))  # 创建一个名为astronaut的窗口,并设置大小
         row = 2
@@ -72,7 +73,7 @@ def show_images(test_images, test_labels, train_images, train_labels, k):
         img = np.array(test_images[i])
         img = img.reshape(28, 28)
         plt.subplot(row, col, 1)  # 将窗口分为两行两列四个子图，则可显示四幅图片
-        plt.title('Test  img: ' + str(test_labels[i]))  # 第一幅图片标题
+        plt.title('Test  img: pre(%d)|act(%d) ' % (predict_labels[i], test_labels[i]))  # 第一幅图片标题
         plt.imshow(img, cmap='binary')  # 将图像黑白显示  # 绘制第一幅图片
 
         for j in range(k):
