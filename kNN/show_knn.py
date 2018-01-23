@@ -95,7 +95,7 @@ clf.fit(training_points, labels)
 x3 = [30]
 y3 = [30]
 testing_point = list(zip(x3, y3))
-print testing_point
+print(testing_point)
 
 toggle = 0
 

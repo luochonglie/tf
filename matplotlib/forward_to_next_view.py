@@ -1,10 +1,10 @@
-import scipy
+import scipy_lib
 from matplotlib import pyplot
 
 DataRange = range(0, 360)
-DataRange = list(map(scipy.deg2rad, DataRange))
-Data1 = list(map(scipy.sin, DataRange))
-Data2 = list(map(scipy.cos, DataRange))
+DataRange = list(map(scipy_lib.deg2rad, DataRange))
+Data1 = list(map(scipy_lib.sin, DataRange))
+Data2 = list(map(scipy_lib.cos, DataRange))
 
 level = True
 

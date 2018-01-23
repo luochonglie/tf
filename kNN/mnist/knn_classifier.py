@@ -8,6 +8,7 @@ Test MNIST dataset
 from sklearn import neighbors
 from utils.mnist_utils import DataUtils
 import datetime
+import numpy as np
 
 
 def main():
@@ -35,17 +36,16 @@ def classify():
     knn = neighbors.KNeighborsClassifier(n_neighbors=3)
     knn.fit(train_images, train_labels)
 
-    start_idx = 0
-    length = 10
+    start_idx = 4999
+    length = 5000
     end_idx = start_idx + length
 
     predict_label = knn.predict(test_images[start_idx:end_idx])
-    matched = list(predict_label == test_labels[start_idx:end_idx])
-
 
     end_time = datetime.datetime.now()
     print('use time: ' + str(end_time - start_time))
-    print('error rate: ' + str(1 - (matched.count(True) * 1.0 / (end_idx - start_idx))))
+    print('error rate: ' + str(
+        1 - (np.sum(predict_label == test_labels[start_idx:end_idx]) * 1.0 / (end_idx - start_idx))))
 
 
 if __name__ == "__main__":
