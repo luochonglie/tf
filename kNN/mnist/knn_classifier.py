@@ -40,11 +40,12 @@ def classify():
     end_idx = start_idx + length
 
     predict_label = knn.predict(test_images[start_idx:end_idx])
-    matched = predict_label == test_labels[start_idx:end_idx]
+    matched = list(predict_label == test_labels[start_idx:end_idx])
+
 
     end_time = datetime.datetime.now()
     print('use time: ' + str(end_time - start_time))
-    print('error rate: ' + str(1 - (list(matched).count(True) * 1.0 / (end_idx - start_idx))))
+    print('error rate: ' + str(1 - (matched.count(True) * 1.0 / (end_idx - start_idx))))
 
 
 if __name__ == "__main__":
