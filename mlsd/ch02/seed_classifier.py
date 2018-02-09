@@ -8,6 +8,7 @@
 
 import numpy as np
 import json
+from sklearn import preprocessing
 
 
 class JSONObject:
@@ -29,6 +30,10 @@ def load_data():
     return features, labels, feature_names, label_names
 
 
+def scale(features):
+    return preprocessing.scale(features)
+
+
 def classify(features, labels, feature_names, label_names):
     print(1)
 
@@ -36,6 +41,8 @@ def classify(features, labels, feature_names, label_names):
 def main():
     features, labels, feature_names, label_names = load_data()
     print(features)
+    scaled_features = scale(features)
+    print(scaled_features)
 
 
 if __name__ == "__main__":
