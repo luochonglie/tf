@@ -7,6 +7,7 @@
 
 
 import unittest
+import Levenshtein as lvst
 
 
 class TestStringMethods(unittest.TestCase):
@@ -31,28 +32,29 @@ class TestStringMethods(unittest.TestCase):
                     "'This is a private conversation!'"
                     ]
 
-        actual = ["A private conversation",
-                  "Why did the writer complain to the people behind him?",
-                  "Last week I went to the theatre.",
-                  "I had a very good seat.",
+        actual = ["A private conversation.",
+                  "Why did the writer not to the man behind him?",
+                  "Last Sunday, I went to a theatre.",
+                  "I had a very good set.",
                   "The play was very interesting.",
                   "I did not enjoy it.",
                   "A young man and a young woman were sitting behind me.",
-                  "They were talking loudly.",
-                  "I got very angry.",
+                  "The talked loudly.",
                   "I could not hear the actors.",
                   "I turned round.",
                   "I looked at the man and the woman angrily.",
                   "They did not pay any attention.",
-                  "In the end, I could not bear it.",
+                  "In the end, I could not enjoy it.",
                   "I turned round again.",
-                  "'I can't hear a word,' I said angrily.",
-                  "'It's none of your business,' the young man said rudely.",
+                  "'I cannot hear a word,' I said.",
+                  "'It's none of your business,' the man said rudely.",
                   "'This is a private conversation!'"
                   ]
 
-        for i in range(len(expected)):
-            self.assertEqual(expected[i], actual[i])
+        print("The similarity of two strings : %.2f%%" % (lvst.ratio("".join(expected), "".join(actual)) * 100))
+
+        self.maxDiff = None
+        self.assertEqual(expected, actual)
 
 
 if __name__ == '__main__':

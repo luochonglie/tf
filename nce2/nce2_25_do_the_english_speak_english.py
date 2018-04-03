@@ -7,53 +7,58 @@
 
 
 import unittest
+import Levenshtein as lvst
 
 
 class TestStringMethods(unittest.TestCase):
     def test_article(self):
-        expected = ('Do the English speak English?\n'
-                    'Why does the writer not understand the porter?\n'
-                    'I arrived in London at last.\n'
-                    'The railway station was big, black and dark.\n'
-                    'I did not know the way to my hotel, so I asked a porter.\n'
-                    'I not only spoke English very carefully, but very clearly as well.\n'
-                    'The porter, however, could not understand me.\n'
-                    'I repeated my question several times and at last he understood.\n'
-                    'He answered me, but he spoke neither slowly nor clearly.\n'
-                    '\'I am a foreigner,\' I said.\n'
-                    'Then he spoke slowly, but I could not understand him.\n'
-                    'My teacher never spoke English like that!\n'
-                    'The porter and I looked at each other and smiled.\n'
-                    'Then he said something and I understood it.\n'
-                    '\'You\'ll soon learn English!\' he said.\n'
-                    'I wonder.\n'
-                    'In England, each person speaks a different language.\n'
-                    'The English understand each other, but I don\'t understand them!\n'
-                    'Do they speak English?'
-                    )
+        expected = ["Do the English speak English?",
+                    "Why does the writer not understand the porter?",
+                    "I arrived in London at last.",
+                    "The railway station was big, black and dark.",
+                    "I did not know the way to my hotel, so I asked a porter.",
+                    "I not only spoke English very carefully, but very clearly as well.",
+                    "The porter, however, could not understand me.",
+                    "I repeated my question several times and at last he understood.",
+                    "He answered me, but he spoke neither slowly nor clearly.",
+                    "'I am a foreigner,' I said.",
+                    "Then he spoke slowly, but I could not understand him.",
+                    "My teacher never spoke English like that!",
+                    "The porter and I looked at each other and smiled.",
+                    "Then he said something and I understood it.",
+                    "'You'll soon learn English!' he said.",
+                    "I wonder.",
+                    "In England, each person speaks a different language.",
+                    "The English understand each other, but I don't understand them!",
+                    "Do they speak English?"
+                    ]
 
-        actual = ("Do/ the English speak English?\n"
-                  "Why does the writer not understand the porter?\n"
-                  "I arrived in London at last.\n"
-                  "The railway station was big, black and dark.\n"
-                  "I did not know the way to my hotel, so I asked a porter.\n"
-                  "I not only spoke English very carefully, but very clearly as well.\n"
-                  "The porter, however, could not understand me.\n"
-                  "I repeated my question several times and at last he understood.\n"
-                  "He answered me, but he spoke neither slowly nor clearly.\n"
-                  "'I am a foreigner,' I said.\n"
-                  "Then he spoke slowly, but I could not understand him.\n"
-                  "My teacher never spoke English like that!\n"
-                  "The porter and I looked at each other and smiled.\n"
-                  "Then he said something and I understood it.\n"
-                  "'You'll soon learn English!' he said.\n"
-                  "I wonder.\n"
-                  "In England, each person speaks a different language.\n"
-                  "The English understand each other, but I don't understand them!\n"
-                  "Do they speak English?")
+        actual = ["Do the English speak English?",
+                  "Why does the writer not understand the porter?",
+                  "I arrived in London at last.",
+                  "The railway station was big, black and dark.",
+                  "I did not know the way to my hotel, so I asked a porter.",
+                  "I not only spoke English very carefully, but very clearly as well.",
+                  "The porter, however, could not understand me.",
+                  "I repeated my question several times and at last he understood.",
+                  "He answered me, but he spoke neither slowly nor clearly.",
+                  "'I am a foreigner,' I said.",
+                  "Then he spoke slowly, but I could not understand him.",
+                  "My teacher never spoke English like that!",
+                  "The porter and I looked at each other and smiled.",
+                  "Then he said something and I understood it.",
+                  "'You'll soon learn English!' he said.",
+                  "I wonder.",
+                  "In England, each person speaks a different language.",
+                  "The English understand each other, but I don't understand them!",
+                  "Do they speak English?"
+                  ]
+
+        print("Similarity between two string : %.2f%%" % (lvst.ratio("".join(expected), "".join(actual)) * 100))
+
         self.maxDiff = None
-        self.assertMultiLineEqual(expected, actual)
+        self.assertEqual(expected, actual)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
