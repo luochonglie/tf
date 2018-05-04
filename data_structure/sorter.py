@@ -7,47 +7,28 @@
 
 
 def quick_sort(array):
-    """ 快速排序，将元素按从小到大排序
+    """ 快速排序，将数组按从小到大排序
 
     :param array: 待排序数组
     :return: 有序数组
     """
-    copied_array = __copy_array(array)
-    __quick_sort(copied_array)
-
-    return copied_array
-
-
-def __is_empty(array):
-    if array is None or len(array) == 0:
-        return True
+    copy = __copy_array(array)
+    if __is_lte_one(copy):
+        return copy
     else:
-        return False
+        __quick_sort(copy)
 
-
-def __copy_array(array):
-    """复制数组
-
-    :param array: 待复制的数组
-    :return: 复制的数组
-    """
-    if array is None:
-        return array
-    else:
-        return array[:]
+    return copy
 
 
 def __quick_sort(array, p=None, r=None):
-    """ 快速排序，将元素按从小到大排序
+    """ 快速排序，将数组指定位置的元素按从小到大排序
 
     :param array: 待排序数组
     :param p: 开始位置
     :param r: 结束位置
     :return: 有序数组
     """
-    if __is_empty(array):
-        return array
-
     if p is None:
         p = 0
 
@@ -78,6 +59,51 @@ def __partition(array, p, r):
 
     __exchange(array, i + 1, r)
     return i + 1
+
+
+def insert_sort(array):
+    copy = __copy_array(array)
+    if __is_lte_one(copy):
+        return copy
+    else:
+        for j in range(1, len(copy)):
+            i = j - 1
+            key = copy[j]
+            while i >= 0 and copy[i] > key:
+                copy[i + 1] = copy[i]
+                i -= 1
+            copy[i + 1] = key
+        return copy
+
+
+def shell_sort(array):
+    copy = __copy_array(array)
+
+
+def __is_lte_one(array):
+    if array is None or len(array) <= 1:
+        return True
+    else:
+        return False
+
+
+def __is_empty(array):
+    if array is None or len(array) == 0:
+        return True
+    else:
+        return False
+
+
+def __copy_array(array):
+    """复制数组
+
+    :param array: 待复制的数组
+    :return: 复制的数组
+    """
+    if array is None:
+        return array
+    else:
+        return array[:]
 
 
 def __exchange(array, i, j):
