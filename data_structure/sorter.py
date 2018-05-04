@@ -12,11 +12,17 @@ def quick_sort(array):
     :param array: 待排序数组
     :return: 有序数组
     """
-
     copied_array = __copy_array(array)
     __quick_sort(copied_array)
 
     return copied_array
+
+
+def __is_empty(array):
+    if array is None or len(array) == 0:
+        return True
+    else:
+        return False
 
 
 def __copy_array(array):
@@ -26,7 +32,7 @@ def __copy_array(array):
     :return: 复制的数组
     """
     if array is None:
-        return None
+        return array
     else:
         return array[:]
 
@@ -39,6 +45,9 @@ def __quick_sort(array, p=None, r=None):
     :param r: 结束位置
     :return: 有序数组
     """
+    if __is_empty(array):
+        return array
+
     if p is None:
         p = 0
 
@@ -72,6 +81,12 @@ def __partition(array, p, r):
 
 
 def __exchange(array, i, j):
+    """交换数组指定位置的两个元素
+
+    :param array: 数组
+    :param i: 位置1
+    :param j: 位置2
+    """
     if i != j:
         x = array[i]
         array[i] = array[j]
