@@ -61,7 +61,7 @@ def __partition(array, p, r):
     return i + 1
 
 
-def insert_sort(array):
+def insertion_sort(array):
     copy = __copy_array(array)
     if __is_lte_one(copy):
         return copy
@@ -97,6 +97,69 @@ def shell_sort(array):
             gap //= 3
 
         return copy
+
+
+def merge_sort_recursion(array):
+    copy = __copy_array(array)
+    if __is_lte_one(copy):
+        return copy
+    else:
+        __merge_sort_recursion(copy, 0, len(copy) - 1)
+        return copy
+
+
+def __merge_sort_recursion(array, left, right):
+    if left < right:
+        mid = (left + right) // 2
+        __merge_sort_recursion(array, left, mid)
+        __merge_sort_recursion(array, mid + 1, right)
+        __merge(array, left, mid, right)
+
+
+def __merge(array, left, mid, right):
+    n1 = mid - left + 1
+    n2 = right - (mid + 1) + 1
+    left_array = []
+    right_array = []
+
+    left_array.extend(array[left:(mid + 1)])
+    left_array.append(float('inf'))
+
+    right_array.extend(array[(mid + 1):(right + 1)])
+    right_array.append(float('inf'))
+
+    i = 0
+    j = 0
+    for k in range(left, right + 1):
+        if left_array[i] <= right_array[j]:
+            array[k] = left_array[i]
+            i += 1
+        else:
+            array[k] = right_array[j]
+            j += 1
+
+
+def __merge_with_one_temp_array(array, left, mid, right):
+    tmp_array = []
+    i = left
+    j = mid + 1
+
+    while i <= mid and j <= right:
+        if array[i] <= array[j]:
+            tmp_array.append(array[i])
+            i += 1
+        else:
+            tmp_array.append(array[j])
+            j += 1
+
+    if i <= mid:
+        tmp_array.extend(array[i:mid + 1])
+
+    if j <= right:
+        tmp_array.extend(array[j:right + 1])
+
+    for k in range(left, right + 1):
+        array[k] = tmp_array[k - left]
 
 
 def __is_lte_one(array):

@@ -36,12 +36,17 @@ class TestSorter(unittest.TestCase):
 
     def test_insert_sort(self):
         for i in range(len(array_to_be_sort)):
-            actual_array = sorter.insert_sort(array_to_be_sort[i])
+            actual_array = sorter.insertion_sort(array_to_be_sort[i])
             self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
 
     def test_shell_sort(self):
         for i in range(len(array_to_be_sort)):
             actual_array = sorter.shell_sort(array_to_be_sort[i])
+            self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
+
+    def test_merge_sort_recursion(self):
+        for i in range(len(array_to_be_sort)):
+            actual_array = sorter.merge_sort_recursion(array_to_be_sort[i])
             self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
 
     def test_all(self):
