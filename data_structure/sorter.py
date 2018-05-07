@@ -78,6 +78,25 @@ def insert_sort(array):
 
 def shell_sort(array):
     copy = __copy_array(array)
+    if __is_lte_one(copy):
+        return copy
+    else:
+        length = len(copy)
+        gap = 1
+        while gap < length // 3:
+            gap = gap * 3 + 1
+
+        while gap > 0:
+            for j in range(gap, length):
+                key = copy[j]
+                i = j - gap
+                while i >= 0 and copy[i] > key:
+                    copy[i + gap] = copy[i]
+                    i -= gap
+                copy[i + gap] = key
+            gap //= 3
+
+        return copy
 
 
 def __is_lte_one(array):
