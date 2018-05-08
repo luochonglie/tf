@@ -113,12 +113,10 @@ def __merge_sort_recursion(array, left, right):
         mid = (left + right) // 2
         __merge_sort_recursion(array, left, mid)
         __merge_sort_recursion(array, mid + 1, right)
-        __merge(array, left, mid, right)
+        __merge_sentry(array, left, mid, right)
 
 
-def __merge(array, left, mid, right):
-    n1 = mid - left + 1
-    n2 = right - (mid + 1) + 1
+def __merge_sentry(array, left, mid, right):
     left_array = []
     right_array = []
 
@@ -139,7 +137,7 @@ def __merge(array, left, mid, right):
             j += 1
 
 
-def __merge_with_one_temp_array(array, left, mid, right):
+def __merge(array, left, mid, right):
     tmp_array = []
     i = left
     j = mid + 1
@@ -160,6 +158,44 @@ def __merge_with_one_temp_array(array, left, mid, right):
 
     for k in range(left, right + 1):
         array[k] = tmp_array[k - left]
+
+
+def merge_sort_iteration(array):
+    copy = __copy_array(array)
+    if __is_lte_one(copy):
+        return copy
+    else:
+        __merge_sort_iteration(copy)
+        return copy
+
+
+def __merge_sort_iteration(array):
+    sub_grp_len = 1
+    length = len(array)
+    while sub_grp_len < length:
+        left = 0
+        while left + sub_grp_len < length:
+            mid = left + sub_grp_len - 1
+            right = mid + sub_grp_len if mid + sub_grp_len <= length - 1 else length - 1
+            __merge(array, left, mid, right)
+            left = right + 1
+        sub_grp_len *= 2
+
+
+def selection_sort(array):
+    copy = __copy_array(array)
+    if __is_lte_one(copy):
+        return copy
+    else:
+        for i in range(0, len(copy)):
+            minimal = copy[i]
+            minimal_idx = i
+            for j in range(i, len(copy)):
+                if minimal > copy[j]:
+                    minimal = copy[j]
+                    minimal_idx = j
+            __exchange(copy, i, minimal_idx)
+    return copy
 
 
 def __is_lte_one(array):

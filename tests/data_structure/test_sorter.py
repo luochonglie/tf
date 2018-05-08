@@ -15,7 +15,7 @@ array_to_be_sort = [None, [], [1], [1, 2], [2, 2, 2], [1, 2, 3, 4, 5, 6, 7, 8], 
 array_sorted = [None, [], [1], [1, 2], [2, 2, 2], [1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8],
                 [1, 2, 2, 3, 3, 4, 4, 4, 6, 22, 23, 32, 45, 45, 54, 78, 323, 454, 545]]
 
-func_list = ["quick_sort", "insert_sort"]
+func_list = ["quick_sort", "insertion_sort", "shell_sort", "merge_sort_recursion", "selection_sort"]
 
 
 class TestSorter(unittest.TestCase):
@@ -47,6 +47,16 @@ class TestSorter(unittest.TestCase):
     def test_merge_sort_recursion(self):
         for i in range(len(array_to_be_sort)):
             actual_array = sorter.merge_sort_recursion(array_to_be_sort[i])
+            self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
+
+    def test_merge_sort_iteration(self):
+        for i in range(len(array_to_be_sort)):
+            actual_array = sorter.merge_sort_iteration(array_to_be_sort[i])
+            self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
+
+    def test_selection_sort(self):
+        for i in range(len(array_to_be_sort)):
+            actual_array = sorter.selection_sort(array_to_be_sort[i])
             self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
 
     def test_all(self):
