@@ -198,6 +198,53 @@ def selection_sort(array):
     return copy
 
 
+def heap_sort(array):
+    copy = __copy_array(array)
+    if __is_lte_one(copy):
+        return copy
+    else:
+        __heap_sort(copy)
+        return copy
+
+
+def __parent(i):
+    return (i - 1) >> 1
+
+
+def __left(i):
+    return (i << 1) + 1
+
+
+def __right(i):
+    return (i << 1) + 2
+
+
+def __max_heapify(array, i, size):
+    l = __left(i)
+    r = __right(i)
+    largest = i
+    if l < size and array[l] > array[largest]:
+        largest = l
+    if r < size and array[r] > array[largest]:
+        largest = r
+    if largest != i:
+        __exchange(array, largest, i)
+        __max_heapify(array, largest, size)
+
+
+def __build_max_heap(array):
+    size = len(array)
+    for i in range(__parent(size - 1), -1, -1):
+        __max_heapify(array, i, size)
+
+
+def __heap_sort(array):
+    __build_max_heap(array)
+    for i in range(len(array) - 1, 0, -1):
+        __exchange(array, i, 0)
+        __max_heapify(array, 0, i)
+
+
 def __is_lte_one(array):
     if array is None or len(array) <= 1:
         return True
