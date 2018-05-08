@@ -240,9 +240,9 @@ def __build_max_heap(array):
 
 def __heap_sort(array):
     __build_max_heap(array)
-    for i in range(len(array) - 1, 0, -1):
-        __exchange(array, i, 0)
-        __max_heapify(array, 0, i)
+    for size in range(len(array), 1, -1):
+        __exchange(array, (size - 1), 0)
+        __max_heapify(array, 0, size - 1)
 
 
 def __is_lte_one(array):

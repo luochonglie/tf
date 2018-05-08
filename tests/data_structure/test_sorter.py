@@ -21,7 +21,7 @@ func_list = ["quick_sort", "insertion_sort", "shell_sort", "merge_sort_recursion
 class TestSorter(unittest.TestCase):
     # 初始化工作
     def setUp(self):
-        array_to_be_sort.append(list(np.random.randint(0, 1000, 100)))
+        array_to_be_sort.append(list(np.random.randint(0, 1000, 100000)))
         array_sorted.append(list(np.sort(array_to_be_sort[-1])))
         pass
 
@@ -62,6 +62,11 @@ class TestSorter(unittest.TestCase):
     def test_heap_sort(self):
         for i in range(len(array_to_be_sort)):
             actual_array = sorter.heap_sort(array_to_be_sort[i])
+            self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
+
+    def test_np_sort(self):
+        for i in range(2, len(array_to_be_sort)):
+            actual_array = list(np.sort(array_to_be_sort[i]))
             self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
 
     def test_all(self):
