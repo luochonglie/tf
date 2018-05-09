@@ -15,13 +15,14 @@ array_to_be_sort = [None, [], [1], [1, 2], [2, 2, 2], [1, 2, 3, 4, 5, 6, 7, 8], 
 array_sorted = [None, [], [1], [1, 2], [2, 2, 2], [1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8],
                 [1, 2, 2, 3, 3, 4, 4, 4, 6, 22, 23, 32, 45, 45, 54, 78, 323, 454, 545]]
 
-func_list = ["quick_sort", "insertion_sort", "shell_sort", "merge_sort_recursion", "selection_sort", "heap_sort"]
+func_list = ["quick_sort", "insertion_sort", "shell_sort", "merge_sort_recursion", "selection_sort", "heap_sort",
+             "counting_sort"]
 
 
 class TestSorter(unittest.TestCase):
     # 初始化工作
     def setUp(self):
-        array_to_be_sort.append(list(np.random.randint(0, 1000, 100000)))
+        array_to_be_sort.append(list(np.random.randint(0, 1000, 100)))
         array_sorted.append(list(np.sort(array_to_be_sort[-1])))
         pass
 
@@ -68,6 +69,12 @@ class TestSorter(unittest.TestCase):
     def test_heap_sort(self):
         for i in range(len(array_to_be_sort)):
             actual_array = sorter.heap_sort(array_to_be_sort[i])
+            self.assertEqual(array_sorted[i], actual_array,
+                             "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
+
+    def test_counting_sort(self):
+        for i in range(len(array_to_be_sort)):
+            actual_array = sorter.counting_sort(array_to_be_sort[i])
             self.assertEqual(array_sorted[i], actual_array,
                              "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
 

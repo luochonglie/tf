@@ -245,6 +245,32 @@ def __max_heapify(array, i, size):
         __max_heapify(array, largest, size)
 
 
+def counting_sort(array):
+    if __is_no_need_to_sort(array):
+        return __copy_array(array)
+    else:
+        return __counting_sort(array, max(array))
+
+
+def __counting_sort(array, max_num):
+    c = [None] * (max_num + 1)
+    for i in range(0, len(c)):
+        c[i] = 0
+
+    for i in range(0, len(array)):
+        c[array[i]] += 1
+
+    for i in range(1, len(c)):
+        c[i] = c[i] + c[i - 1]
+
+    b = [None] * len(array)
+    for j in range(len(array) - 1, -1, -1):
+        b[c[array[j]] - 1] = array[j]
+        c[array[j]] = c[array[j]] - 1
+
+    return b
+
+
 def __is_no_need_to_sort(array):
     if array is None or len(array) <= 1:
         return True
