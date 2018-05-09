@@ -13,7 +13,7 @@ def quick_sort(array):
     :return: 有序数组
     """
     copy = __copy_array(array)
-    if __is_lte_one(copy):
+    if __is_need_to_sort(copy):
         return copy
     else:
         __quick_sort(copy)
@@ -63,7 +63,7 @@ def __partition(array, p, r):
 
 def insertion_sort(array):
     copy = __copy_array(array)
-    if __is_lte_one(copy):
+    if __is_need_to_sort(copy):
         return copy
     else:
         for j in range(1, len(copy)):
@@ -78,7 +78,7 @@ def insertion_sort(array):
 
 def shell_sort(array):
     copy = __copy_array(array)
-    if __is_lte_one(copy):
+    if __is_need_to_sort(copy):
         return copy
     else:
         length = len(copy)
@@ -101,7 +101,7 @@ def shell_sort(array):
 
 def merge_sort_recursion(array):
     copy = __copy_array(array)
-    if __is_lte_one(copy):
+    if __is_need_to_sort(copy):
         return copy
     else:
         __merge_sort_recursion(copy, 0, len(copy) - 1)
@@ -162,7 +162,7 @@ def __merge(array, left, mid, right):
 
 def merge_sort_iteration(array):
     copy = __copy_array(array)
-    if __is_lte_one(copy):
+    if __is_need_to_sort(copy):
         return copy
     else:
         __merge_sort_iteration(copy)
@@ -184,7 +184,7 @@ def __merge_sort_iteration(array):
 
 def selection_sort(array):
     copy = __copy_array(array)
-    if __is_lte_one(copy):
+    if __is_need_to_sort(copy):
         return copy
     else:
         for i in range(0, len(copy)):
@@ -200,7 +200,7 @@ def selection_sort(array):
 
 def heap_sort(array):
     copy = __copy_array(array)
-    if __is_lte_one(copy):
+    if __is_need_to_sort(copy):
         return copy
     else:
         __heap_sort(copy)
@@ -245,7 +245,7 @@ def __max_heapify(array, i, size):
         __max_heapify(array, largest, size)
 
 
-def __is_lte_one(array):
+def __is_need_to_sort(array):
     if array is None or len(array) <= 1:
         return True
     else:
