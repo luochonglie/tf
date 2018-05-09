@@ -208,15 +208,28 @@ def heap_sort(array):
 
 
 def __parent(i):
-    return (i - 1) >> 1
+    return (i - 1) // 2
 
 
 def __left(i):
-    return (i << 1) + 1
+    return (i * 2) + 1
 
 
 def __right(i):
-    return (i << 1) + 2
+    return (i * 2) + 2
+
+
+def __heap_sort(array):
+    __build_max_heap(array)
+    for i in range(len(array) - 1, 0, -1):
+        __exchange(array, 0, i)
+        __max_heapify(array, 0, i)
+
+
+def __build_max_heap(array):
+    size = len(array)
+    for i in range(__parent(size - 1), -1, -1):
+        __max_heapify(array, i, size)
 
 
 def __max_heapify(array, i, size):
@@ -230,19 +243,6 @@ def __max_heapify(array, i, size):
     if largest != i:
         __exchange(array, largest, i)
         __max_heapify(array, largest, size)
-
-
-def __build_max_heap(array):
-    size = len(array)
-    for i in range(__parent(size - 1), -1, -1):
-        __max_heapify(array, i, size)
-
-
-def __heap_sort(array):
-    __build_max_heap(array)
-    for size in range(len(array), 1, -1):
-        __exchange(array, (size - 1), 0)
-        __max_heapify(array, 0, size - 1)
 
 
 def __is_lte_one(array):

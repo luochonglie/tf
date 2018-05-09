@@ -32,46 +32,54 @@ class TestSorter(unittest.TestCase):
     def test_quick_sort(self):
         for i in range(len(array_to_be_sort)):
             actual_array = sorter.quick_sort(array_to_be_sort[i])
-            self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
+            self.assertEqual(array_sorted[i], actual_array,
+                             "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
 
     def test_insert_sort(self):
         for i in range(len(array_to_be_sort)):
             actual_array = sorter.insertion_sort(array_to_be_sort[i])
-            self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
+            self.assertEqual(array_sorted[i], actual_array,
+                             "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
 
     def test_shell_sort(self):
         for i in range(len(array_to_be_sort)):
             actual_array = sorter.shell_sort(array_to_be_sort[i])
-            self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
+            self.assertEqual(array_sorted[i], actual_array,
+                             "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
 
     def test_merge_sort_recursion(self):
         for i in range(len(array_to_be_sort)):
             actual_array = sorter.merge_sort_recursion(array_to_be_sort[i])
-            self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
+            self.assertEqual(array_sorted[i], actual_array,
+                             "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
 
     def test_merge_sort_iteration(self):
         for i in range(len(array_to_be_sort)):
             actual_array = sorter.merge_sort_iteration(array_to_be_sort[i])
-            self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
+            self.assertEqual(array_sorted[i], actual_array,
+                             "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
 
     def test_selection_sort(self):
         for i in range(len(array_to_be_sort)):
             actual_array = sorter.selection_sort(array_to_be_sort[i])
-            self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
+            self.assertEqual(array_sorted[i], actual_array,
+                             "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
 
     def test_heap_sort(self):
         for i in range(len(array_to_be_sort)):
             actual_array = sorter.heap_sort(array_to_be_sort[i])
-            self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
+            self.assertEqual(array_sorted[i], actual_array,
+                             "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
 
     def test_np_sort(self):
         for i in range(2, len(array_to_be_sort)):
             actual_array = list(np.sort(array_to_be_sort[i]))
-            self.assertEqual(array_sorted[i], actual_array, "Failed to sort %s." % (array_to_be_sort[i]))
+            self.assertEqual(array_sorted[i], actual_array,
+                             "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
 
     def test_all(self):
         for func in func_list:
             for i in range(len(array_to_be_sort)):
                 actual_array = eval('sorter.%s' % func)(array_to_be_sort[i])
                 self.assertEqual(array_sorted[i], actual_array,
-                                 "Failed to use [%s] to sort array. [array = %s]" % (func, array_to_be_sort[i]))
+                                 "Failed to use [%s] to sort array. A[%s] = %s" % (func, i, array_to_be_sort[i]))
