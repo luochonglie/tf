@@ -6,6 +6,11 @@
 # @Desc    :
 
 
+import numpy as np
+
+ARRAY_PLACE = [1, 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000]
+
+
 def quick_sort(array):
     """ 快速排序，将数组按从小到大排序
 
@@ -246,29 +251,69 @@ def __max_heapify(array, i, size):
 
 
 def counting_sort(array):
-    if __is_no_need_to_sort(array):
-        return __copy_array(array)
+    copy = __copy_array(array)
+    if __is_no_need_to_sort(copy):
+        return copy
     else:
-        return __counting_sort(array, max(array))
+        __counting_sort(copy, max(array))
+        return copy
 
 
 def __counting_sort(array, max_num):
-    c = [None] * (max_num + 1)
-    for i in range(0, len(c)):
-        c[i] = 0
+    c = list(np.zeros(max_num + 1, dtype=np.int16))
 
     for i in range(0, len(array)):
         c[array[i]] += 1
 
     for i in range(1, len(c)):
-        c[i] = c[i] + c[i - 1]
+        c[i] += c[i - 1]
 
-    b = [None] * len(array)
-    for j in range(len(array) - 1, -1, -1):
-        b[c[array[j]] - 1] = array[j]
-        c[array[j]] = c[array[j]] - 1
+    b = array[:]
+    for i in range(len(array) - 1, -1, -1):
+        array[c[b[i]] - 1] = b[i]
+        c[b[i]] -= 1
 
-    return b
+
+def lsd_radix_sort(array):
+    copy = __copy_array(array)
+    if __is_no_need_to_sort(copy):
+        return copy
+    else:
+        __lsd_radix_sort(copy)
+        return copy
+
+
+def __lsd_radix_sort(array):
+    max_one = max(array)
+    d = __get_capacity(max_one)
+    for i in range(1, d + 1):
+        __radix_counting_sort(array, 9, i)
+
+
+def __radix_counting_sort(array, max_num, d):
+    c = list(np.zeros(max_num + 1, dtype=np.int16))
+
+    for i in range(len(array)):
+        c[__get_digit(array[i], d)] += 1
+
+    for i in range(1, len(c)):
+        c[i] += c[i - 1]
+
+    b = array[:]
+    for i in range(len(array) - 1, -1, -1):
+        array[c[__get_digit(b[i], d)] - 1] = b[i]
+        c[__get_digit(b[i], d)] -= 1
+
+
+def __get_capacity(num):
+    i = 2
+    while num // ARRAY_PLACE[i] != 0:
+        i += 1
+    return i - 1
+
+
+def __get_digit(num, d):
+    return (num // ARRAY_PLACE[d]) % 10
 
 
 def __is_no_need_to_sort(array):
