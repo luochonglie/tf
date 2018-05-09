@@ -274,16 +274,16 @@ def __counting_sort(array, max_num):
         c[b[i]] -= 1
 
 
-def lsd_radix_sort(array):
+def radix_sort(array):
     copy = __copy_array(array)
     if __is_no_need_to_sort(copy):
         return copy
     else:
-        __lsd_radix_sort(copy)
+        __radix_sort(copy)
         return copy
 
 
-def __lsd_radix_sort(array):
+def __radix_sort(array):
     max_one = max(array)
     d = __get_capacity(max_one)
     for i in range(1, d + 1):

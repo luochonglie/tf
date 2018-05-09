@@ -80,7 +80,7 @@ class TestSorter(unittest.TestCase):
 
     def test_lsd_radix_sort(self):
         for i in range(len(array_to_be_sort)):
-            actual_array = sorter.lsd_radix_sort(array_to_be_sort[i])
+            actual_array = sorter.radix_sort(array_to_be_sort[i])
             self.assertEqual(array_sorted[i], actual_array,
                              "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
 
