@@ -8,8 +8,6 @@
 
 import numpy as np
 
-ARRAY_PLACE = [1, 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000]
-
 
 def quick_sort(array):
     """ 快速排序，将数组按从小到大排序
@@ -71,14 +69,18 @@ def insertion_sort(array):
     if __is_no_need_to_sort(copy):
         return copy
     else:
-        for j in range(1, len(copy)):
-            i = j - 1
-            key = copy[j]
-            while i >= 0 and copy[i] > key:
-                copy[i + 1] = copy[i]
-                i -= 1
-            copy[i + 1] = key
+        __insertion_sort(copy)
         return copy
+
+
+def __insertion_sort(array):
+    for j in range(1, len(array)):
+        i = j - 1
+        key = array[j]
+        while i >= 0 and array[i] > key:
+            array[i + 1] = array[i]
+            i -= 1
+        array[i + 1] = key
 
 
 def shell_sort(array):
@@ -274,6 +276,9 @@ def __counting_sort(array, max_num):
         c[b[i]] -= 1
 
 
+ARRAY_RADIX_10 = [1, 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000]
+
+
 def radix_sort(array):
     copy = __copy_array(array)
     if __is_no_need_to_sort(copy):
@@ -285,13 +290,19 @@ def radix_sort(array):
 
 def __radix_sort(array):
     max_one = max(array)
-    d = __get_capacity(max_one)
+    d = __get_total_digits(max_one)
     for i in range(1, d + 1):
-        __radix_counting_sort(array, 9, i)
+        __radix_counting_sort(array, i)
 
 
-def __radix_counting_sort(array, max_num, d):
-    c = list(np.zeros(max_num + 1, dtype=np.int16))
+def __radix_counting_sort(array, d):
+    """对指定位进行计数排序
+
+    :param array: 正整数数组
+    :param d: 第n位
+    :return: 按指定位排好序的数组
+    """
+    c = list(np.zeros(10, dtype=np.int16))
 
     for i in range(len(array)):
         c[__get_digit(array[i], d)] += 1
@@ -305,15 +316,73 @@ def __radix_counting_sort(array, max_num, d):
         c[__get_digit(b[i], d)] -= 1
 
 
-def __get_capacity(num):
+def __get_total_digits(num):
+    """获取正整数的位数
+
+    :param num: 正整数
+    :return: 位数
+    """
     i = 2
-    while num // ARRAY_PLACE[i] != 0:
+    while num // ARRAY_RADIX_10[i] != 0:
         i += 1
     return i - 1
 
 
 def __get_digit(num, d):
-    return (num // ARRAY_PLACE[d]) % 10
+    """获取正整数某一位上的数字
+
+    :param num: 正整数
+    :param d: 第d位
+    :return: 第d位上的数字
+    """
+    return (num // ARRAY_RADIX_10[d]) % 10
+
+
+def bucket_sort(array):
+    copy = __copy_array(array)
+    if __is_no_need_to_sort(copy):
+        return copy
+    else:
+        __bucket_sort(copy)
+        return copy
+
+
+def __bucket_sort(array):
+    """用桶排序算法对数组进行从小到大排序
+
+    :param array: 待排序数组
+    :return: 已排序数组
+    """
+    # 数组长度的位数
+    digits_of_len = __get_total_digits(len(array))
+    # 最大值的位数
+    digits_of_max = __get_total_digits(max(array))
+    # 桶大小的位数 = 数组长度的位数-1 <=  最大值的位数 + 1
+    digits_of_buckets = digits_of_len if digits_of_len <= digits_of_max + 1 else digits_of_max + 1
+    # 桶大小
+    # len < max : 10^digits(len)
+    # len > max : 10^digits(max + 1)
+    buckets_size = ARRAY_RADIX_10[digits_of_buckets]
+    # 映射到桶内需要去掉几位数 如：348 映射到 10 个桶，需要抹掉2位尾数，因此需要将 348 // 100
+    truncate = ARRAY_RADIX_10[digits_of_max + 1] // ARRAY_RADIX_10[digits_of_buckets]
+
+    buckets = [None] * buckets_size
+    for i in range(len(buckets)):
+        buckets[i] = []
+
+    for i in range(len(array)):
+        buckets[__map_to_bucket(array[i], truncate)].append(array[i])
+
+    for i in range(len(buckets)):
+        __insertion_sort(buckets[i])
+
+    array.clear()
+    for i in range(len(buckets)):
+        array.extend(buckets[i])
+
+
+def __map_to_bucket(num, truncate):
+    return num // truncate
 
 
 def __is_no_need_to_sort(array):

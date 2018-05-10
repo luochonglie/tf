@@ -22,7 +22,7 @@ func_list = ["quick_sort", "insertion_sort", "shell_sort", "merge_sort_recursion
 class TestSorter(unittest.TestCase):
     # 初始化工作
     def setUp(self):
-        array_to_be_sort.append(list(np.random.randint(0, 1000, 100)))
+        array_to_be_sort.append(list(np.random.randint(0, 1000, 10000)))
         array_sorted.append(list(np.sort(array_to_be_sort[-1])))
         pass
 
@@ -78,9 +78,15 @@ class TestSorter(unittest.TestCase):
             self.assertEqual(array_sorted[i], actual_array,
                              "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
 
-    def test_lsd_radix_sort(self):
+    def test_radix_sort(self):
         for i in range(len(array_to_be_sort)):
             actual_array = sorter.radix_sort(array_to_be_sort[i])
+            self.assertEqual(array_sorted[i], actual_array,
+                             "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
+
+    def test_bucket_sort(self):
+        for i in range(len(array_to_be_sort)):
+            actual_array = sorter.bucket_sort(array_to_be_sort[i])
             self.assertEqual(array_sorted[i], actual_array,
                              "Failed to sort array. A[%s] = %s." % (i, array_to_be_sort[i]))
 
