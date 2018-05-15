@@ -29,14 +29,23 @@ class TestStringMethods(unittest.TestCase):
                     ]
 
         actual = ["Out of the darkness",
-                  "Why was the girl in hospital.",
-                  ""
+                  "Why was the girl in hospital?",
+                  "Nearly a week passed before the girl was able to explain what had happened to her.",
+                  "One afternoon she set out from the coast in a small boat and was caught in a storm.",
+                  "Towards evening, the boat struck a rock and the girl jumped into the sea.",
+                  "Then she swam to the shore after spending the whole night in the water.",
+                  "During that time she covered a distance of eight miles.",
+                  "Early next morning, she saw a light ahead.",
+                  "She knew she was near the shore because the light was high up on the cliffs.",
+                  "On arriving at the shore, the girl struggled up the cliff towards the light she had seen.",
+                  "That was all she remembered.",
+                  "When she woke up a day later, she found herself in hospital."
                   ]
 
-        __similarity = lvst.ratio("".join(expected), "".join(actual))
+        __similarity = lvst.ratio("".join(expected), "".join(actual)) * 100
         similarity = ss.Similarity(os.path.basename(__file__), __similarity)
 
-        print("The similarity of these articles : %.2f%%" % (__similarity * 100))
+        print("The similarity of these articles : %.2f%%" % __similarity)
         ss.insert(similarity)
         self.maxDiff = None
         self.assertEqual(expected, actual)
